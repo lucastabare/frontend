@@ -23,7 +23,7 @@ export default function ProductDescription({
       <Typography variant="body2" color="text.secondary">{shortTxt}</Typography>
 
       <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-        <Button size="small" variant="text" onClick={() => setOpen(v => !v)}>
+        <Button size="small" variant="text" onClick={() => setOpen(v => !v)} sx={{color: '#3483fa', textTransform: 'capitalize'}}>
           {open ? 'Ver menos' : 'Ver más'}
         </Button>
         <Button
@@ -31,6 +31,7 @@ export default function ProductDescription({
           variant="text"
           startIcon={<ListAltOutlinedIcon />}
           onClick={onOpenSpecs}
+          sx={{color: '#3483fa', textTransform: 'capitalize'}}
         >
           Ver características
         </Button>

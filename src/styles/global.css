@@ -1,0 +1,16 @@
+@import url('./fonts.css');
+
+html, body, #root {
+     width: 100%; 
+    overflow-x: clip; 
+}
+
+* { 
+    box-sizing: border-box; 
+}
+
+img { 
+    max-width: 100%; 
+    height: auto; 
+    display: block; 
+}

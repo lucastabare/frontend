@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import type { Product, PaymentMethod, Seller } from '../interfaces/types';
+import type { Product, PaymentMethod, Seller, AdBanner} from '../interfaces/types';
 
 export default function WorkflowServices(http: AxiosInstance) {
   return {
@@ -33,6 +33,10 @@ export default function WorkflowServices(http: AxiosInstance) {
     },
     async getSeller(id: string) {
       const { data } = await http.get<Seller>(`sellers/${id}`);
+      return data;
+    },
+    async getAds() {
+      const { data } = await http.get<AdBanner[]>('ads');
       return data;
     },
   };

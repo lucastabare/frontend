@@ -31,7 +31,7 @@ export default function MoreTile({ count, previewUrl, onClick }: Props) {
           justifyContent: 'center',
         }}
       >
-        <Typography variant="body2" sx={{ color: '#fff', fontWeight: 700 }}>
+        <Typography variant="h4" sx={{ color: '#fff', fontWeight: 700, fontSize: '12px' }}>
           +{count}
         </Typography>
       </Box>

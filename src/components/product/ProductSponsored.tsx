@@ -1,24 +1,58 @@
-import { Box, Typography, Card, CardContent } from '@mui/material';
-import type { Product } from '../../interfaces/types';
-import Price from '../ui/Price';
+import { useEffect, useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import api from '../../service/api';
+import type { AdBanner } from '../../interfaces/types';
 
-export default function ProductSponsored({ items }: { items: Product[] }) {
-  if (!items?.length) return null;
+const INTERVAL_MS = 4000;
+
+export default function ProductSponsored() {
+  const [ads, setAds] = useState<AdBanner[]>([]);
+  const [i, setI] = useState(0);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const data = await api.workflow.getAds();
+        if (alive) setAds(data || []);
+      } catch (e) { 
+        console.log("Error => ", e.message)
+       }
+    })();
+    return () => { alive = false; };
+  }, []);
+
+  useEffect(() => {
+    if (ads.length <= 1) return;
+    const t = setInterval(() => setI(prev => (prev + 1) % ads.length), INTERVAL_MS);
+    return () => clearInterval(t);
+  }, [ads.length]);
+
+  if (!ads.length) return null;
+  const ad = ads[i];
+
   return (
     <Box sx={{ mt: 3 }}>
       <Typography variant="h6" gutterBottom>Publicidad</Typography>
-      <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', pb: 1 }}>
-        {items.map(p => (
-          <Card key={p.id} variant="outlined" sx={{ minWidth: 220, flex: '0 0 auto' }}>
-            <img src={p.thumbnail || p.pictures?.[0]?.url} alt={p.title}
-                 style={{ width:'100%', aspectRatio:'1/1', objectFit:'cover' }} />
-            <CardContent>
-              <Typography variant="body2" noWrap>{p.title}</Typography>
-              <Price price={p.price} currency={p.currency} freeShipping={p.shipping?.free_shipping ?? false} />
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
+      <a
+        href={ad.href || '#'}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ display: 'block' }}
+        title={ad.alt || 'Publicidad'}
+      >
+        <img
+          src={ad.image}
+          alt={ad.alt || 'ad'}
+          style={{
+            width: '100%',
+            display: 'block',
+            borderRadius: 8,
+            objectFit: 'cover',
+            aspectRatio: '16/9'
+          }}
+        />
+      </a>
     </Box>
   );
 }

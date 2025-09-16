@@ -1,10 +1,11 @@
-import { Breadcrumbs, Link as MUILink, Typography } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Breadcrumbs } from '@mui/material';
+import ALink from '../ui/ALink';
 
 type Props = {
   category?: string;
   brand?: string;
   title?: string;
+  currentHref?: string; // opcional, si querés controlar el href del último ítem
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -12,7 +13,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   tv: 'TVs',
   notebook: 'Notebooks',
   audio: 'Audio',
-  // agregá más si necesitás
 };
 
 function labelCategory(cat?: string) {
@@ -24,44 +24,36 @@ function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function truncate(s = '', max = 60) {
+function truncate(s = '', max = 80) {
   return s.length > max ? s.slice(0, max - 1) + '…' : s;
 }
 
-export default function ProductBreadcrumb({ category, brand, title }: Props) {
+export default function ProductBreadcrumb({ category, brand, title, currentHref }: Props) {
   const catLabel = labelCategory(category);
+  const lastHref = currentHref || window.location.pathname;
 
   return (
     <Breadcrumbs aria-label="breadcrumb" separator="›" sx={{ mb: 2 }}>
-      <MUILink component={RouterLink} underline="hover" color="inherit" to="/">
-        Inicio
-      </MUILink>
+      <ALink to="/" title="Inicio" />
 
       {catLabel && (
-        <MUILink
-          component={RouterLink}
-          underline="hover"
-          color="inherit"
+        <ALink
           to={`/?category=${encodeURIComponent(category!)}`}
-        >
-          {catLabel}
-        </MUILink>
+          title={catLabel}
+        />
       )}
 
       {brand && (
-        <MUILink
-          component={RouterLink}
-          underline="hover"
-          color="inherit"
+        <ALink
           to={`/?brand=${encodeURIComponent(brand)}`}
-        >
-          {brand}
-        </MUILink>
+          title={brand}
+        />
       )}
 
-      <Typography color="text.primary" noWrap title={title} sx={{ maxWidth: { xs: '100%', md: 520 } }}>
-        {truncate(title, 80)}
-      </Typography>
+      <ALink
+        to={lastHref}
+        title={truncate(title, 80)}
+      />
     </Breadcrumbs>
   );
 }

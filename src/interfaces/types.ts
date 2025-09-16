@@ -61,3 +61,10 @@ export interface ProductSpecs {
   highlights?: SpecGroup;
   groups?: Record<string, SpecGroup>;
 }
+
+export interface AdBanner {
+  id: string;
+  image: string;
+  href?: string;
+  alt?: string;
+}

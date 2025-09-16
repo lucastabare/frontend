@@ -3,6 +3,7 @@ import ThumbTile from './ThumbTile';
 import MoreTile from './MoreTile';
 import { MAX_VISIBLE_THUMBS } from './constants';
 import type { Picture } from '../../../interfaces/types';
+import { MAIN_H } from './constants';
 
 type Props = {
   pics: Picture[];
@@ -22,7 +23,7 @@ export default function VerticalThumbs({ pics, activeIndex, onPick, onOpenAll }:
       spacing={1}
       sx={{
         display: { xs: 'none', md: 'flex' },
-        maxHeight: 440,
+        maxHeight: {MAIN_H},
         overflowY: 'auto',
         pr: 0.5,
         scrollbarWidth: 'none',

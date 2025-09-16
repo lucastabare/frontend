@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
     palette: {
@@ -7,6 +7,6 @@ export const theme = createTheme({
         background: { default: '#f5f5f5' },
     },
     typography: {
-        fontFamily: ['Inter', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
+        fontFamily: ['Proxima Nova', 'Inter', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
     },
 });
